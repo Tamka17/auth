@@ -29,13 +29,13 @@ func (m *mockUserService) RefreshToken(token string) (string, error) {
 
 func TestLoginHandler_Success(t *testing.T) {
 	mockService := &mockUserService{}
-	handler := handler.NewLoginHandler(mockService)
+	loginHandler := handler.NewLoginHandler(mockService)
 
 	req := httptest.NewRequest("POST", "/login", nil)
 	req.Header.Set("Authorization", "Basic "+basicAuth("testuser", "testpass"))
 
 	rr := httptest.NewRecorder()
-	handler.Handle(rr, req)
+	loginHandler.Handle(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("expected status 200, got %v", status)
@@ -49,13 +49,13 @@ func TestLoginHandler_Success(t *testing.T) {
 
 func TestLoginHandler_InvalidAuth(t *testing.T) {
 	mockService := &mockUserService{}
-	handler := handler.NewLoginHandler(mockService)
+	loginHandler := handler.NewLoginHandler(mockService)
 
 	req := httptest.NewRequest("POST", "/login", nil)
 	req.Header.Set("Authorization", "Bearer token")
 
 	rr := httptest.NewRecorder()
-	handler.Handle(rr, req)
+	loginHandler.Handle(rr, req)
 
 	if status := rr.Code; status != http.StatusBadRequest {
 		t.Errorf("expected status 400, got %v", status)
