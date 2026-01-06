@@ -41,8 +41,6 @@ func (s *userService) ValidateCredentials(username, password string) (bool, erro
 		return false, err
 	}
 
-	// Теперь используем user для проверки пароля
-	// В реальном приложении используйте bcrypt.CompareHashAndPassword
 	if password != user.Password {
 		return false, nil
 	}
